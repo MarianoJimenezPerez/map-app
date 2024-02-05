@@ -1,6 +1,16 @@
 import db from "./../db/config.js";
 import DeviceModel from "./../models/deviceModel.js";
 
+export const generateContent = async (req, res) => {
+  db.sync()
+    .then(() => {
+      console.log("Table created successfully");
+    })
+    .catch((error) => {
+      console.error("Error creating table:", error);
+    });
+};
+
 export const getAllDevices = async (req, res) => {
   let connection;
 
@@ -46,11 +56,11 @@ export const getDeviceById = async (req, res) => {
 export const createDevice = async (req, res) => {
   let connection;
 
-  const { latitude, longitude } = req.body;
+  const { name, latitude, longitude } = req.body;
 
   try {
     connection = await db.authenticate();
-    const newDevice = await DeviceModel.create({ latitude, longitude });
+    const newDevice = await DeviceModel.create({ name, latitude, longitude });
     res
       .status(201)
       .json({ data: newDevice, message: "Device created successfully." });

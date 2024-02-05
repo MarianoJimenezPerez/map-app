@@ -3,6 +3,7 @@ import {
   getAllDevices,
   getDeviceById,
   createDevice,
+  generateContent,
   updateDevice,
   deleteDevice,
 } from "../controllers/devicesController.js";
@@ -10,6 +11,7 @@ import {
 const devicesRouter = express.Router();
 
 devicesRouter.get("/", getAllDevices);
+devicesRouter.get("/dsa", generateContent);
 devicesRouter.get("/:id", getDeviceById);
 devicesRouter.post("/create", createDevice);
 devicesRouter.patch("/update/:id", updateDevice);
