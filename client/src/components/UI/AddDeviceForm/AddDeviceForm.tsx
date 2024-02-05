@@ -1,22 +1,31 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Grid, TextField, Button } from "@mui/material";
+import { Grid, TextField, Button, Typography } from "@mui/material";
+import { createDevice } from "../../../services/devices";
+import { FormDataInterface } from "../../../types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface FormData {
-  name: string;
-  mobileNumber: number;
-  lastConnection: string;
-  latitude: number;
-  longitude: number;
+const initialFormState = {
+  name: "",
+  mobileNumber: 0,
+  lastConnection: "",
+  latitude: 0,
+  longitude: 0,
+};
+
+interface AddDeviceFormProps {
+  onSubmit?: () => void;
 }
 
-const AddDeviceForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    mobileNumber: 0,
-    lastConnection: "",
-    latitude: 0,
-    longitude: 0,
+const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: createDevice,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["devices"] });
+    },
   });
+  const [formData, setFormData] = useState<FormDataInterface>(initialFormState);
+  const [error, setError] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,9 +36,14 @@ const AddDeviceForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    mutate(formData);
+    setFormData(initialFormState);
+    setError(false);
+    if (onSubmit) {
+      onSubmit();
+    }
   };
 
   return (
@@ -53,6 +67,7 @@ const AddDeviceForm: React.FC = () => {
             fullWidth
             label="Mobile Number"
             name="mobileNumber"
+            type="number"
             variant="filled"
             value={formData.mobileNumber}
             onChange={handleChange}
@@ -112,6 +127,11 @@ const AddDeviceForm: React.FC = () => {
           >
             Add
           </Button>
+          {error && (
+            <Typography color="error" sx={{ textAlign: "center" }}>
+              Something went wrong. Try again later
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </form>

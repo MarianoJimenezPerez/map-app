@@ -56,11 +56,17 @@ export const getDeviceById = async (req, res) => {
 export const createDevice = async (req, res) => {
   let connection;
 
-  const { name, latitude, longitude } = req.body;
+  const { name, mobileNumber, lastConnection, latitude, longitude } = req.body;
 
   try {
     connection = await db.authenticate();
-    const newDevice = await DeviceModel.create({ name, latitude, longitude });
+    const newDevice = await DeviceModel.create({
+      name,
+      mobileNumber,
+      lastConnection,
+      latitude,
+      longitude,
+    });
     res
       .status(201)
       .json({ data: newDevice, message: "Device created successfully." });

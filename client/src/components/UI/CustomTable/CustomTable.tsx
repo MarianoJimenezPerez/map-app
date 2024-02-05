@@ -10,8 +10,9 @@ import {
   Button,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Alignment, DeviceInterface } from "../../../types";
+import { deleteDevice } from "../../../services/devices";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface TableHeader {
   label: string;
@@ -23,6 +24,16 @@ interface CustomTableProps {
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({ headers, tableRows }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: deleteDevice,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["devices"] });
+    },
+  });
+  const handleDelete = async (id: number) => {
+    mutate(id);
+  };
   return (
     <TableContainer>
       <Table
@@ -51,10 +62,10 @@ const CustomTable: React.FC<CustomTableProps> = ({ headers, tableRows }) => {
                 {device.name}
               </TableCell>
               <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                {device.mobile_number}
+                {device.mobileNumber}
               </TableCell>
               <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                {device.last_connection}
+                {device.lastConnection}
               </TableCell>
               <TableCell align="right" sx={{ color: "#B0B8C4" }}>
                 {device.latitude}
@@ -71,10 +82,7 @@ const CustomTable: React.FC<CustomTableProps> = ({ headers, tableRows }) => {
                     justifyContent: "flex-end",
                   }}
                 >
-                  <Button>
-                    <EditNoteIcon color="primary" />
-                  </Button>
-                  <Button>
+                  <Button onClick={() => handleDelete(device.id)}>
                     <DeleteIcon color="error" />
                   </Button>
                 </Box>

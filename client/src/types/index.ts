@@ -6,8 +6,20 @@ export enum Alignment {
 export interface DeviceInterface {
   id: number;
   name: string;
-  mobile_number: number;
-  last_connection: string;
+  mobileNumber: number;
+  lastConnection: string;
+  latitude: number;
+  longitude: number;
+}
+export interface MarkerInterface {
+  id: number;
+  latitude: number;
+  longitude: number;
+}
+export interface FormDataInterface {
+  name: string;
+  mobileNumber: number;
+  lastConnection: string;
   latitude: number;
   longitude: number;
 }

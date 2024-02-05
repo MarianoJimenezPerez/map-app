@@ -1,20 +1,38 @@
 import React from "react";
-import "leaflet/dist/leaflet.css";
+import { Box, Skeleton, Typography } from "@mui/material";
 import Map from "../components/UI/Map/Map";
+import { useQuery } from "@tanstack/react-query";
+import { fetchDevices } from "../services/devices";
+import "leaflet/dist/leaflet.css";
 
 const Home: React.FC = () => {
-  const markers = [
-    {
-      id: 1,
-      latitude: 39.422,
-      longitude: -0.351,
-      markerContent: <h1>My content</h1>,
-    },
-  ];
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["devices"],
+    queryFn: async () => await fetchDevices(),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
   return (
     <div>
-      <Map markers={markers} />
+      {isLoading && !isError && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Skeleton
+            variant="rectangular"
+            width={1000}
+            height={600}
+            animation="wave"
+          />
+        </Box>
+      )}
+      {!isError && !isLoading && data !== undefined && (
+        <Map markers={data.data} />
+      )}
+
+      {isError && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography>Something went wrong. Try again later</Typography>
+        </Box>
+      )}
     </div>
   );
 };

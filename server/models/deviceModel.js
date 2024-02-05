@@ -9,6 +9,17 @@ const DeviceModel = db.define("Device", {
       len: [3, 90],
     },
   },
+  mobileNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastConnection: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    validate: {
+      isDate: true,
+    },
+  },
   latitude: {
     type: DataTypes.FLOAT,
     allowNull: false,

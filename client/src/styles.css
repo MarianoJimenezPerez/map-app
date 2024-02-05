@@ -17,3 +17,6 @@ a {
   width: 1000px;
   margin: 0 auto;
 }
+.leaflet-popup-content p {
+  margin: 0 !important;
+}

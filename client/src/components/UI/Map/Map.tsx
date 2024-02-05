@@ -1,15 +1,10 @@
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
-interface MarkerProps {
-  id: number;
-  latitude: number;
-  longitude: number;
-  markerContent: React.ReactNode;
-}
+import { DeviceInterface } from "../../../types";
+import { Box, Typography } from "@mui/material";
 
 interface MapProps {
-  markers: MarkerProps[];
+  markers: DeviceInterface[];
 }
 
 const Map: React.FC<MapProps> = ({ markers }) => {
@@ -26,7 +21,52 @@ const Map: React.FC<MapProps> = ({ markers }) => {
               position={[marker.latitude, marker.longitude]}
               key={marker.id}
             >
-              <Popup>{marker.markerContent}</Popup>
+              <Popup>
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+                      Name:&nbsp;
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, fontSize: "14px" }}>
+                      {marker.name}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+                      Mobile:&nbsp;
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, fontSize: "14px" }}>
+                      {marker.mobileNumber}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+                      LC:&nbsp;
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, fontSize: "14px" }}>
+                      {marker.lastConnection}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+                      LT:&nbsp;
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, fontSize: "14px" }}>
+                      {marker.latitude}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+                      LG:&nbsp;
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, fontSize: "14px" }}>
+                      {marker.longitude}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Popup>
             </Marker>
           );
         })}
