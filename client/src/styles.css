@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #101418;
+  font-family: "roboto";
+  color: #fff;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+.leaflet-container {
+  height: 600px;
+  width: 1000px;
+  margin: 0 auto;
+}
