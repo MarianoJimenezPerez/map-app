@@ -12,6 +12,9 @@ a {
   text-decoration: none;
   color: #fff;
 }
+a.active {
+  color: #66b2ff;
+}
 .leaflet-container {
   height: 600px;
   width: 1000px;
@@ -19,4 +22,15 @@ a {
 }
 .leaflet-popup-content p {
   margin: 0 !important;
+}
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+::-webkit-scrollbar:vertical {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #66b2ff;
+  border-radius: 20px;
+  border: none;
 }

@@ -35,9 +35,9 @@ const CustomTable: React.FC<CustomTableProps> = ({ headers, tableRows }) => {
     mutate(id);
   };
   return (
-    <TableContainer>
+    <TableContainer sx={{ height: "400px", width: "1000px", margin: "0 auto" }}>
       <Table
-        sx={{ width: 1000, margin: "0 auto", color: "#B0B8C4" }}
+        sx={{ width: "100%", color: "#B0B8C4" }}
         aria-label="customized table"
       >
         <TableHead>
