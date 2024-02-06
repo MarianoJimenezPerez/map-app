@@ -20,7 +20,7 @@ interface TableHeader {
 }
 interface CustomTableProps {
   headers: TableHeader[];
-  tableRows: DeviceInterface[];
+  tableRows?: DeviceInterface[];
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({ headers, tableRows }) => {
@@ -56,39 +56,40 @@ const CustomTable: React.FC<CustomTableProps> = ({ headers, tableRows }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableRows.map((device) => (
-            <TableRow key={device.id}>
-              <TableCell component="th" scope="row" sx={{ color: "#B0B8C4" }}>
-                {device.name}
-              </TableCell>
-              <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                {device.mobileNumber}
-              </TableCell>
-              <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                {device.lastConnection}
-              </TableCell>
-              <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                {device.latitude}
-              </TableCell>
-              <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                {device.longitude}
-              </TableCell>
-              <TableCell align="right" sx={{ color: "#B0B8C4" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Button onClick={() => handleDelete(device.id)}>
-                    <DeleteIcon color="error" />
-                  </Button>
-                </Box>
-              </TableCell>
-            </TableRow>
-          ))}
+          {tableRows &&
+            tableRows.map((device) => (
+              <TableRow key={device.id}>
+                <TableCell component="th" scope="row" sx={{ color: "#B0B8C4" }}>
+                  {device.name}
+                </TableCell>
+                <TableCell align="right" sx={{ color: "#B0B8C4" }}>
+                  {device.mobileNumber}
+                </TableCell>
+                <TableCell align="right" sx={{ color: "#B0B8C4" }}>
+                  {device.lastConnection}
+                </TableCell>
+                <TableCell align="right" sx={{ color: "#B0B8C4" }}>
+                  {device.latitude}
+                </TableCell>
+                <TableCell align="right" sx={{ color: "#B0B8C4" }}>
+                  {device.longitude}
+                </TableCell>
+                <TableCell align="right" sx={{ color: "#B0B8C4" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button onClick={() => handleDelete(device.id)}>
+                      <DeleteIcon color="error" />
+                    </Button>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

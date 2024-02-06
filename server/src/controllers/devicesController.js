@@ -1,5 +1,5 @@
-import db from "./../db/config.js";
-import DeviceModel from "./../models/deviceModel.js";
+import db from "../db/config.js";
+import DeviceModel from "../models/deviceModel.js";
 
 export const generateContent = async (req, res) => {
   db.sync()
