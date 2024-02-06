@@ -102,3 +102,5 @@ pnpm install
 | Tanstack Query   | https://tanstack.com/query/latest     |
 | Axios            | https://axios-http.com/               |
 | Material UI      | https://mui.com/                      |
+| Leafet           | https://leafletjs.com/                |
+| React Leaflet    | https://react-leaflet.js.org/         |
